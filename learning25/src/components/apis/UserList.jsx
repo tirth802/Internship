@@ -1,13 +1,19 @@
 import axios from 'axios'
+import { CustomLoader } from '../CustomLoader'
 import React, { useEffect, useState } from 'react'
 
 export const UserList = () => {
     const[user,setuser]=useState([])
+    const[isLoading,setisLoading]=useState(FinalizationRegistry)
     const getuserData=async()=>{
+        //start
+        setisLoading(true)
         const res=await axios.get("https://node5.onrender.com/user/user")
         console.log(res)
         console.log(res.data)
         setuser(res.data.data)
+        //end
+        setisLoading(false)
     }
     useEffect(()=>{getuserData},[])
   return (
@@ -36,6 +42,9 @@ export const UserList = () => {
                                 {
                                     user.isActive == true ? "Active" : "Not active"
                                 }
+                            </td>
+                            <td>
+                                <button onClick={()=>{deletUser(user._id)}}className='btn btn-danger'>DELETE</button>
                             </td>
                         </tr>
                     })
